@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>北回归线极客节 GeekDay</title>
+  <link rel="icon" href="https://www.hackpku.com/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', 'Noto Sans SC', 'Microsoft YaHei', Arial, sans-serif;
+      margin: 0;
+      background: #f7f9fb;
+      color: #222;
+    }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #1976d2;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem 0;
+    }
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 1.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+    }
+    .navbar a:hover, .navbar a.active {
+      background: #1560b3;
+      color: #fff;
+    }
+    header {
+      background: #1976d2;
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    header p {
+      margin: 0.5rem 0 0 0;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto 2rem auto;
+      background: none;
+      padding: 0;
+    }
+    .section-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(25, 118, 210, 0.06);
+      padding: 2.5rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .section-card h2, .section-card h3, .section-card h4 {
+      color: #1976d2;
+      font-weight: 700;
+    }
+    .section-card h2 { font-size: 1.5rem; margin-top: 0; }
+    .section-card h3 { font-size: 1.2rem; margin-top: 1.5rem; }
+    .section-card ul, .section-card ol { padding-left: 2em; }
+    .section-card li { margin-bottom: 0.5em; }
+    .section-card p { line-height: 1.8; margin: 1em 0; }
+    .section-card blockquote {
+      border-left: 4px solid #1976d2;
+      background: #f0f6ff;
+      margin: 1.5em 0;
+      padding: 1em 1.5em;
+      color: #333;
+      border-radius: 0 8px 8px 0;
+    }
+    .section-card table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.5em 0;
+    }
+    .section-card th, .section-card td {
+      border: 1px solid #e0e0e0;
+      padding: 0.5em 1em;
+      text-align: left;
+    }
+    .section-card th {
+      background: #f0f6ff;
+      color: #1976d2;
+    }
+    .timeline {
+      position: relative;
+      margin: 2rem 0 2rem 0.5rem;
+      padding-left: 2.5rem;
+      border-left: 3px solid #1976d2;
+    }
+    .timeline-event {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -1.35rem;
+      top: 0.2rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: #1976d2;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px #1976d2;
+      z-index: 2;
+    }
+    .timeline-content {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(25, 118, 210, 0.08);
+      padding: 1.2rem 1.5rem;
+      margin-left: 0.5rem;
+      min-width: 220px;
+      max-width: 600px;
+    }
+    .timeline-date {
+      color: #1976d2;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .special-thanks {
+      background: #e3f2fd;
+      border-left: 6px solid #1976d2;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(25, 118, 210, 0.06);
+      padding: 2rem 2rem 1.5rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .special-thanks h2 {
+      color: #1976d2;
+      margin-top: 0;
+    }
+    footer {
+      background: #f5f5f5;
+      color: #666;
+      padding: 2rem 0 1rem 0;
+      text-align: center;
+      font-size: 1rem;
+      border-top: 1px solid #e0e0e0;
+    }
+    .sponsors {
+      margin: 1.5rem 0 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      align-items: center;
+    }
+    .sponsors img {
+      height: 48px;
+      max-width: 120px;
+      object-fit: contain;
+      filter: grayscale(0.2);
+      background: #fff;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 1px 4px rgba(25, 118, 210, 0.05);
+    }
+    @media (max-width: 600px) {
+      main { padding: 0; }
+      .section-card, .special-thanks { padding: 1rem 0.5rem; }
+      header h1 { font-size: 1.5rem; }
+      .timeline-content { padding: 1rem 0.5rem; }
+    }
+    html { scroll-behavior: smooth; }
+    .thanks-row {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 8px rgba(25, 118, 210, 0.05);
+      margin-bottom: 1.5rem;
+      padding: 1.2rem 1.5rem;
+    }
+    .thanks-logo {
+      flex: 0 0 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      margin-right: 2rem;
+    }
+    .thanks-logo img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+    .thanks-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: #1976d2;
+      font-size: 1.15rem;
+    }
+    .thanks-info {
+      flex: 1;
+      font-size: 1rem;
+      color: #333;
+    }
+    @media (max-width: 600px) {
+      .thanks-row {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 0.5rem;
+      }
+      .thanks-logo {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+    }
+    /* 内容美化，仅作用于 section-card 内部 */
+    .section-card p {
+      line-height: 2;
+      margin: 1.1em 0;
+      font-size: 1.08rem;
+      color: #222;
+      letter-spacing: 0.01em;
+    }
+    .section-card ul, .section-card ol {
+      padding-left: 2em;
+      margin-bottom: 1.2em;
+      margin-top: 0.5em;
+    }
+    .section-card li {
+      margin-bottom: 0.4em;
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+    .section-card ul {
+      list-style: disc inside;
+    }
+    .section-card ol {
+      list-style: decimal inside;
+    }
+    .section-card blockquote {
+      border-left: 3px solid #1976d2;
+      background: #f5faff;
+      margin: 1.5em 0;
+      padding: 1em 1.5em;
+      color: #444;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      font-size: 1.04rem;
+    }
+    .section-card table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.5em 0;
+      background: #fafdff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .section-card th, .section-card td {
+      border: 1px solid #e0e0e0;
+      padding: 0.7em 1em;
+      text-align: left;
+    }
+    .section-card th {
+      background: #e3f2fd;
+      color: #1976d2;
+      font-weight: 700;
+    }
+    .section-card img {
+      max-width: 100%;
+      display: block;
+      margin: 1.2em auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+    }
+    .section-card strong {
+      color: #1976d2;
+      font-weight: 700;
+    }
+    .section-card em {
+      color: #1560b3;
+      font-style: italic;
+    }
+    .section-card code {
+      background: #f3f6fa;
+      color: #c7254e;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      font-size: 0.98em;
+    }
+    .section-card pre {
+      background: #f3f6fa;
+      color: #333;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      padding: 1em;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.98em;
+      margin: 1.5em 0;
+    }
+    .section-card hr {
+      border: none;
+      border-top: 1.5px solid #e3eaf3;
+      margin: 2em 0;
+    }
+    .info-list { display: flex; flex-wrap: wrap; gap: 1.2em 2em; margin: 1.2em 0; }
+    .info-item { background: #f5faff; border-radius: 8px; padding: 0.7em 1.2em; display: flex; align-items: center; font-size: 1.08em; }
+    .info-icon { color: #1976d2; margin-right: 0.5em; font-size: 1.2em; }
+    .org-list { list-style: none; padding: 0; margin: 1.2em 0; }
+    .org-list li { margin-bottom: 0.7em; display: flex; align-items: flex-start; }
+    .org-icon { color: #1976d2; margin-right: 0.5em; font-size: 1.2em; }
+    .track-cards { display: flex; gap: 1.5em; margin: 1.2em 0; flex-wrap: wrap; }
+    .track-card { background: #e3f2fd; border-radius: 10px; padding: 1em 1.2em; display: flex; align-items: flex-start; min-width: 220px; flex: 1; box-shadow: 0 1px 6px rgba(25,118,210,0.06); }
+    .track-icon { color: #1976d2; font-size: 2em; margin-right: 0.7em; }
+    .award-list { margin: 1.2em 0; }
+    .award-item { background: #fffbe7; border-radius: 8px; padding: 0.7em 1.2em; margin-bottom: 0.7em; display: flex; align-items: center; font-size: 1.08em; }
+    .award-icon { color: #fbc02d; margin-right: 0.5em; font-size: 1.3em; }
+    .notice-box { background: #fff3e0; border-left: 5px solid #ffa726; border-radius: 8px; padding: 1em 1.2em; margin: 1.2em 0; display: flex; align-items: flex-start; }
+    .notice-icon { color: #ffa726; margin-right: 0.7em; font-size: 1.5em; }
+    @media (max-width: 700px) {
+      .info-list, .track-cards { flex-direction: column; gap: 0.7em; }
+    }
+  </style>
+  <script>
+    // 激活导航栏锚点
+    document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('.navbar a');
+      window.addEventListener('scroll', function() {
+        let fromTop = window.scrollY + 80;
+        navLinks.forEach(link => {
+          let section = document.querySelector(link.hash);
+          if (section && section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>北回归线极客节 GeekDay</h1>
+    <p>潮汕青年 · 技术创新 · 交流盛会</p>
+  </header>
+  <nav class="navbar">
+    <a href="#bg">实施背景</a>
+    <a href="#idea">理念宗旨</a>
+    <a href="#time">时间地点</a>
+    <a href="#org">举办单位</a>
+    <a href="#summary">活动概要</a>
+    <a href="#main">主体赛事</a>
+    <a href="#forum">圆桌论坛</a>
+    <a href="#service">赛后服务</a>
+    <a href="#schedule">赛程安排</a>
+    <a href="#require">参赛要求</a>
+    <a href="#score">评分与奖项</a>
+    <a href="#welfare">周边福利</a>
+    <a href="#thanks">特别鸣谢</a>
+  </nav>
+  <main>
+    <div class="section-card" id="bg">
+      <h2>实施背景</h2>
+      <p>习近平总书记曾在2022年视察中国人民大学时强调，中国青年身处伟大时代的最前列，思维最活跃、精力最旺盛，最灵敏地感受到中国之变、世界之变、时代之变，是答好"时代之题"的开路先锋和事业闯将。而当下，中国也正处经济增长引擎升级换代的关键期，由传统劳动密集型产业驱动切换至技术密集型产业驱动。近五年来，人工智能开源大模型频登榜首、新能源汽车产销占世界七成、双足四足机器人与无人机垄断市场，"中国制造2025"的众多规划提前达标，中国科技方兴未艾，正全方位多领域勇立于世界潮头。</p>
+      <p>近年来，由于基础教育的高质量快速发展，潮汕地区养育了无数高新技术顶尖人才。在产业界，有如月之暗面创始人杨植麟（汕头金中校友）、非夕科技创始人卢策吾（林百欣中学校友）、穹彻智能创始人王世全（汕头金中、潮阳实验校友）、速腾聚创创始人邱纯鑫（潮州高级中学校友）、奥比中光创始人黄源浩（汕头金中校友）、与光科技联合创始人蔡旭升（揭阳一中校友）等一批高精尖产业学术型创业者，也有众多在一线科技巨头中担任核心要职的技术专家。在学生人才储备方面，近十年涌现了如清华大学2011级杨植麟、2013级李阳垟、2015级姚雨星、2018级王煜楠、2021级郑友捷等获得该校最高荣誉学生奖项"清华特等奖学金"的理工科潮籍学子，以及上千名在北大、中科院、北航等几十所传统理工强校勤工苦学的优秀学生。由此可见，潮汕地区的科创土壤基础深厚，一股变革新势力正蓄势待发。</p>
+      <p>因此，为进一步响应国家发展新质生产力的号召、促进广大潮籍学子发扬敢为人先的优良传统、积极弘扬技术创新精神，特此提议举办"北回归线极客节"（下简称"北归极客节"）。本活动旨在为潮籍学子提供一个纯粹的技术创新交流、应用落地实践、创业孵化指导的平台，具有重要的现实意义，具体如下：</p>
+      <ul>
+        <li>（1）促进跨专业学科交流：鼓励不同技术领域的合作、实践，扩大知识储备、提升应用能力，培育未来的复合型科创领袖；</li>
+        <li>（2）挖掘新生科创项目：依托特定的技术落地主题，通过开放式竞争的机制，孵化有发展潜力的科创团队与项目；</li>
+        <li>（3）反哺家乡与服务社会：为潮汕地区引入世界先进的"极客"（Geek）文化，推动新技术、新模式、新产业反哺家乡，为社会发展贡献潮籍智慧。</li>
+      </ul>
+    </div>
+    <div class="section-card" id="idea">
+      <h2>理念宗旨</h2>
+      <p>活动宗旨为：背靠潮汕、立足湾区、辐射全国，激发青年科技热情，培育学子创新土壤。</p>
+      <p>"北回归线" 取名自潮汕地区所处的北纬23.5度，坐落在汕头的两座北回归线塔是本土青年成长记忆中的标志性建筑。活动简称"北归"，也有在京学成、自北归南、反哺家乡之意。</p>
+    </div>
+    <div class="section-card" id="time">
+      <h2>时间地点</h2>
+      <div class="info-list">
+        <div class="info-item"><span class="material-icons info-icon">event</span><b>时间：</b>2025年8月15 - 17日</div>
+        <div class="info-item"><span class="material-icons info-icon">place</span><b>地点：</b>广东省揭阳市</div>
+        <div class="info-item"><span class="material-icons info-icon">group</span><b>对象：</b>潮汕地区中学在读学生、本硕博在读潮汕籍学生、相关行业校友</div>
+      </div>
+    </div>
+    <div class="section-card" id="org">
+      <h2>举办单位</h2>
+      <ul class="org-list">
+        <li><span class="material-icons org-icon">star</span><div><b>指导单位：</b>揭阳市委市政府</div></li>
+        <li><span class="material-icons org-icon">school</span><div><b>赛事指导单位：</b>阿里巴巴达摩院、北京智源研究院、广州日报报业集团GDI智库</div></li>
+        <li><span class="material-icons org-icon">emoji_events</span> <div><b>主办单位：</b>潮阳实验学校北京校友会</div></li>
+        <li><span class="material-icons org-icon">groups</span> <div><b>协办单位：</b> 汕头金中北京校友会、揭阳一中北京校友会、汕头一中北京校友会、潮阳一中北京校友会、潮州金中北京校友会、澄海中学北京校友会、汕头市实验北京校友联络处</div></li>
+      </ul>
+    </div>
+    <div class="section-card" id="summary">
+      <h2>活动概要</h2>
+      <p>"北归极客节" 将在汕头市潮阳实验学校普宁校区举办。汕头市潮阳实验学校是广东省综合实力排名前5的十二年一贯制中学、国家级示范性普通高中，建校以来18届高考，共培养了6位省状元、264名清华北大录取生、6000多名双一流高校录取生，在培育科技创新储备人才方面贡献突出。这些教育优势为极客节的举办提供了坚实保障，也彰显着本土学子具备参与高水平科技创新活动的潜力。</p>
+      <p>外部成功案例表明地域性创客活动大有可为。以浙江省杭州市的年度创业创新盛会"万物生长大会"为例，该大会已连续举办九届，吸引上千名独角兽企业创始人、投资专家、科学家及政府代表参与，共话区域高质量发展。通过搭建行业领袖与创业者面对面交流的平台，"万物生长大会"不断强化了浙江作为创新高地的影响力，成为地方科创活动的标杆。这一模式和影响力为我们筹办本地极客节提供了宝贵的参考，印证了在地方举办创客盛会的可行性和巨大价值。 "北归极客节"分为主体赛事与圆桌论坛两个板块。</p>
+      <p>其中主体赛事以"黑客松"为开展形式，拟设立"AI Agent（智能体）赛道"与"Embodied AI（具身智能）赛道"。其中每个赛道分为"学业组"和"产业组"，并行竞争。"学业组"面向潮汕地区中学在读学生和本硕博在读的潮汕籍学生，以激发学子技术创造热情。"产业组"面向产业在职及创业的潮汕地区中学校友团队，以挖掘更多高新技术初创团队。 圆桌论坛将着力邀请在百度、阿里、腾讯、字节等科技巨头任职的潮汕籍技术专家，以及月之暗面、穹彻智能、速腾聚创等科技独角兽的潮汕籍创始人，同台进行分享交流。</p>
+    </div>
+    <div class="section-card" id="main">
+      <h2>主体赛事</h2>
+      <div class="track-cards">
+        <div class="track-card">
+          <span class="material-icons track-icon">smart_toy</span>
+          <div>
+            <b>AI Agent赛道</b>
+            <p>开发具有自主决策、自主学习能力的智能代理系统，强调技术创新性和广泛应用前景。</p>
+          </div>
+        </div>
+        <div class="track-card">
+          <span class="material-icons track-icon">android</span>
+          <div>
+            <b>Embodied AI赛道</b>
+            <p>聚焦机器人与物联网，打造能在物理世界中感知、行动的智能装置或系统。</p>
+          </div>
+        </div>
+      </div>
+      <div class="notice-box"><span class="material-icons notice-icon">info</span>所有参赛队伍需在规定时间内完成项目开发，遵守公平竞赛原则，主办方将提供全方位后勤支持。</div>
+    </div>
+    <div class="section-card" id="forum">
+      <h2>圆桌论坛</h2>
+      <p>在"北归极客节"活动中，圆桌论坛是一个重要的互动环节，其核心目标是通过主题交流与深度对话，促成多领域思想的碰撞与合作创新。圆桌论坛旨在搭建一个融合不同视角的平台，通过邀请各领域的专业人士与技术人才，激发出具有突破性的创意和合作机会。在圆桌论坛中，参赛者将有机会深入了解当下技术发展的关键问题，并与嘉宾共同探讨行业面临的未来挑战。</p>
+      <p>论坛将围绕若干关键主题展开深入讨论，涵盖人工智能技术的发展方向、开源生态的未来构建、以及技术应用对社会的影响等。这些议题同时兼顾前瞻性和实际需求，每个主题均由一名领衔专家主持，通过分享行业经验和洞察，为参会者带来专业的知识拓展与启发。此外，嘉宾还将结合自身实践，展示如何将理论与实际相结合，以激励更多创新性思维的产生。 活动形式采用小组讨论与观众互动相结合的模式，每个专题设定明确的议程和流程，分为两个主要阶段。主题发言阶段，由专家对议题核心内容进行系统性阐述，引导参与者对相关领域形成整体认知。开放讨论阶段，参会者通过现场提问和讨论，与嘉宾进行面对面的深度交流。活动前期，策划团队将广泛收集潜在问题并精心筛选，以确保讨论方向紧扣主题并富有建设性，提升活动的整体参与感与价值。</p>
+      <p>为确保论坛的高效组织与顺利进行，每个环节将设置专门负责人，确保内容准备、时间安排和设备调试等方面的无缝衔接。同时，论坛内容将通过多种媒介形式实时传播，既能够扩大活动的影响力，也为更多未能到场的受众提供参与感。整个论坛旨在创造一个多方共享知识、激发创新的空间，推动技术思想的交流融合，并为相关行业的未来发展提供全新灵感和方向。</p>
+    </div>
+    <div class="section-card" id="service">
+      <h2>赛后服务</h2>
+      <p>为推动黑客马拉松优胜成果加快转化，进一步发挥赛事在促进科技创新、引导青年创业、服务地方发展的平台功能，赛事组委会将逐年摸索专项孵化支持机制，在未来时机成熟时，针对获奖项目开展遴选孵化。形成从项目评选、能力辅导、资源支持到成果落地的服务链条，提升项目技术成熟度和市场适应能力，推动优秀创新项目在潮汕地区实现本地化转化应用。</p>
+      <p>入选项目将获得专属孵化资源，包括初创咨询、行业导师指导、企业对接机会、场地支持、落地注册引导等，协助项目从技术方案逐步升级为产品原型，并具备初步市场验证能力。孵化器由地方政府、校友组织与企业三方联合推动，采用"政府指导+企业支持+社会参与"的运营模式。孵化期内，项目可获得办公工位、创业导师团辅导、开发资源扶持及资金通道推荐等一揽子支持。同时，部分项目将在技术成熟后获得产业链企业试点机会，促进技术成果在家乡实现本地化落地，进一步打通"从赛事到产业"的转化路径。</p>
+    </div>
+    <div class="section-card" id="schedule">
+      <h2>赛程安排</h2>
+      <div class="timeline-hpku">
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-divider">
+            <div class="timeline-dot">
+              <span class="material-icons">group_add</span>
+            </div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-card-title">7月27日–7月28日 线上初赛</div>
+            <div class="timeline-card-content">初赛阶段作为创意展示窗口，参赛团队将在规定时间内提交项目初步构想与技术方案文档，包括创新背景、预期功能、技术路径与预期影响等。主办方将为初赛团队提供赛前线上讲解会、项目规划模板和导师指导支持，帮助各队梳理创意方向，提升项目成熟度。初赛作品将在官网或展示平台集中亮相，向公众展示青年创客的创新思维，增强项目影响力与社会关注度。</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-divider">
+            <div class="timeline-dot">
+              <span class="material-icons">event_available</span>
+            </div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-card-title">8月17日 08:00 签到与开幕式</div>
+            <div class="timeline-card-content">参赛团队现场签到，举行开幕式，介绍赛程安排与注意事项。</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-divider">
+            <div class="timeline-dot">
+              <span class="material-icons">code</span>
+            </div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-card-title">8月17日 10:00 – 8月18日 12:00 项目开发</div>
+            <div class="timeline-card-content">团队在现场进行为期26小时的实战开发，围绕预设命题或深化初赛方案展开原型构建，最终通过答辩和展示进行评审。</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-divider">
+            <div class="timeline-dot">
+              <span class="material-icons">rate_review</span>
+            </div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-card-title">8月18日 13:00 – 15:00 作品展示与答辩</div>
+            <div class="timeline-card-content">各队伍展示项目成果，评委现场提问与评分，评选出优胜团队。</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-divider">
+            <div class="timeline-dot">
+              <span class="material-icons">emoji_events</span>
+            </div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-card-title">8月18日 16:00 闭幕式与颁奖</div>
+            <div class="timeline-card-content">举行闭幕式，公布获奖名单并颁发奖项。</div>
+          </div>
+        </div>
+      </div>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <style>
+        .timeline-hpku {
+          position: relative;
+          margin: 2.5rem 0 1rem 0;
+          padding-left: 90px;
+        }
+        .timeline-line {
+          position: absolute;
+          left: 48px;
+          top: 0;
+          bottom: 0;
+          width: 6px;
+          background: linear-gradient(to bottom, #1976d2 60%, #e3e3e3 100%);
+          border-radius: 3px;
+          z-index: 0;
+        }
+        .timeline-item {
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 2.5rem;
+          position: relative;
+        }
+        .timeline-divider {
+          position: relative;
+          width: 96px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          z-index: 2;
+        }
+        .timeline-dot {
+          width: 36px;
+          height: 36px;
+          background: #1976d2;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 0 4px #fff, 0 2px 8px rgba(25, 118, 210, 0.10);
+          z-index: 2;
+          position: relative;
+          left: 12px;
+        }
+        .timeline-dot .material-icons {
+          color: #fff;
+          font-size: 22px;
+        }
+        .timeline-card {
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 2px 16px rgba(25, 118, 210, 0.08);
+          margin-left: 12px;
+          padding: 1.5rem 2rem 1.2rem 2rem;
+          min-width: 220px;
+          max-width: 600px;
+          flex: 1;
+        }
+        .timeline-card-title {
+          background: #f5f5f5;
+          color: #1976d2;
+          font-weight: 700;
+          font-size: 1.1rem;
+          border-radius: 8px 8px 0 0;
+          padding: 0.7rem 1rem;
+          margin: -1.5rem -2rem 1rem -2rem;
+        }
+        .timeline-card-content {
+          color: #333;
+          font-size: 1rem;
+          line-height: 1.8;
+        }
+        @media (max-width: 700px) {
+          .timeline-hpku { padding-left: 0; }
+          .timeline-line { left: 18px; }
+          .timeline-item { flex-direction: column; align-items: stretch; }
+          .timeline-divider { flex-direction: row; width: auto; margin-bottom: 0.5rem; }
+          .timeline-dot { margin: 0 1rem 0 0; left: 0; }
+          .timeline-card { margin-left: 0; padding: 1rem 0.5rem; }
+          .timeline-card-title { margin: -1rem -0.5rem 1rem -0.5rem; }
+        }
+      </style>
+    </div>
+    <div class="section-card" id="require">
+      <h2>参赛要求</h2>
+      <ol>
+        <li>每位参赛选手能且只能报名参加一个赛道。若同时报名多个赛道，主办方将根据报名情况选择一个赛道进行接收。接收结果将通过邮件通知。</li>
+        <li>参赛选手需自行组队参加本次比赛，原则上不接受个人报名。参赛者需组成2至5人的团队，根据项目需求进行组队。</li>
+        <li>本次比赛是开放式程序开发竞赛，允许选手查阅资料，但严禁抄袭他人代码。一经判定有抄袭行为，成绩作废。</li>
+        <li>我们将为选手提供开发场地和住宿，并报销相关交通费用，参赛队伍可以自由安排时间进行开发。如果无法在所提供的开发场地进行比赛，需提前告知联系人。</li>
+        <li>开发成果允许提前提交，在截止时间前允许多次提交。多次提交的，主办方将根据最后一次提交的内容进行评分评奖。</li>
+        <li>奖项将以队伍为单位进行颁发，我们鼓励团队的包容性，欢迎不同领域的人参与到比赛之中，提供基于实用性的创新解决方案。</li>
+        <li>比赛中所产生项目的著作权和使用权归属于举办方。</li>
+      </ol>
+    </div>
+    <div class="section-card" id="score">
+      <h2>评分与奖项</h2>
+      <div class="award-list">
+        <div class="award-item"><span class="material-icons award-icon">emoji_events</span>一等奖 <b>25,000元</b>（2名）</div>
+        <div class="award-item"><span class="material-icons award-icon">military_tech</span>二等奖 <b>12,500元</b>（4名）</div>
+        <div class="award-item"><span class="material-icons award-icon">star</span>三等奖 <b>10,000元</b>（6名）</div>
+        <div class="award-item"><span class="material-icons award-icon">thumb_up</span>最佳人气奖 <b>3,000元</b>（3名）</div>
+      </div>
+      <div class="notice-box"><span class="material-icons notice-icon">info</span>所有奖项均以队伍为单位颁发，获奖队伍将获得证书及奖金。</div>
+    </div>
+    <div class="section-card" id="welfare">
+      <h2>周边奖品与其他福利</h2>
+      <ol>
+        <li>赞助商奖品 来自赞助商的各类奖品，为参赛选手提供额外的物质奖励。</li>
+        <li>实习与校招福利 获奖选手有机会获得合作企业的实习推荐机会、合作企业校招绿色通道等，为选手的职业发展提供便利。</li>
+      </ol>
+    </div>
+    <div class="section-card" id="thanks">
+      <h2>特别鸣谢</h2>
+      <div class="thanks-row">
+        <div class="thanks-logo">
+          <img src="./paddle.png" alt="百度飞桨 Logo">
+        </div>
+        <div class="thanks-info">
+          <h3>百度飞桨</h3>
+          <div>百度飞桨是百度公司推出的深度学习平台，提供丰富的模型库和工具，支持多种深度学习任务。</div>
+        </div>
+      </div>
+      <div class="thanks-row">
+        <div class="thanks-logo">
+          <img src="./baai.jpg" alt="北京智源研究院 Logo">
+        </div>
+        <div class="thanks-info">
+          <h3>北京智源研究院</h3>
+          <div>北京智源人工智能研究院专注于人工智能基础理论和前沿技术研究，推动产学研深度融合。</div>
+        </div>
+      </div>
+      <div class="thanks-row">
+        <div class="thanks-logo">
+          <img src="GDI智库.png" alt="GDI智库 Logo">
+        </div>
+        <div class="thanks-info">
+          <h3>广州日报报业集团GDI智库</h3>
+          <div>GDI智库聚焦创新驱动发展，提供高端智力支持与产业服务。</div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div>2025 © 北回归线极客节组委会</div>
+    <div class="sponsors">
+      <img src="https://www.hackpku.com/static/img/jiukun.png" alt="九坤 Logo">
+      <img src="https://www.hackpku.com/static/img/huawei.png" alt="华为 Logo">
+      <img src="https://www.hackpku.com/static/img/zhenghe.png" alt="真格 Logo">
+      <img src="https://www.hackpku.com/static/img/glodon.png" alt="广联达 Logo">
+      <img src="https://www.hackpku.com/static/img/shanxing.png" alt="山行 Logo">
+      <img src="https://www.hackpku.com/static/img/tencent.png" alt="腾讯 Logo">
+    </div>
+    <div style="margin-top:1rem;"><a href="https://beian.miit.gov.cn/" target="_blank" style="color:#1976d2;text-decoration:none;">粤ICP备xxxxxxx号</a></div>
+  </footer>
+</body>
+</html> 
